@@ -17,10 +17,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "allowedCommonJsDependencies": [
-              "quill",
-              "quill-cursors"
-            ],
             "outputPath": "dist/quill-collaborative",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -34,8 +30,6 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/quill/dist/quill.core.css",
-              "./node_modules/quill/dist/quill.snow.css",
               "src/styles.scss"
             ],
             "scripts": []

@@ -1,10 +1,7 @@
 <div class="container">
-  <h3>Welcome to a Quill 2.0 Collaborative Demo</h3>
-  <div class="quill-container">
-    <div id="editor">
-      <p>Hello World!</p>
-      <p>Some initial <strong>bold</strong> text</p>
-      <p><br /></p>
-    </div>
+  <h3>Welcome to a Prosemirror Collaborative Demo</h3>
+  <div class="NgxEditor__Wrapper">
+    <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+    <ngx-editor [editor]="editor" [ngModel]="html" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
   </div>
 </div>
