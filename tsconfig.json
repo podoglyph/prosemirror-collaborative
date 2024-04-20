@@ -25,7 +25,7 @@
       "ES2022",
       "dom"
     ],
-    "types": ["node", "quill"],
+    "types": ["node"],
     "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
