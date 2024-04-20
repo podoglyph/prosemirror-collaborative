@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'quill-collaborative' title`, () => {
+  it(`should have the 'prosemirror-collaborative' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('quill-collaborative');
+    expect(app.title).toEqual('prosemirror-collaborative');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, quill-collaborative');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, prosemirror-collaborative');
   });
 });

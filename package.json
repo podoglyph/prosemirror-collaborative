@@ -1,5 +1,5 @@
 {
-  "name": "quill-collaborative",
+  "name": "prosemirror-collaborative",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
