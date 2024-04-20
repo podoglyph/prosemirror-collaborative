@@ -44,6 +44,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       content: '<p>Hello World from ngx-editor with Yjs!</p>',
       history: true,
       keyboardShortcuts: true,
+      inputRules: true,
       plugins: [
         ySyncPlugin(this.yText),
         yCursorPlugin(this.provider.awareness),
