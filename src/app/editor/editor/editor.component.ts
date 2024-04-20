@@ -1,20 +1,12 @@
-import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as Y from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
 import {
   ySyncPlugin,
   yUndoPlugin,
-  undo,
-  redo,
   yCursorPlugin,
-  ProsemirrorBinding,
 } from 'y-prosemirror';
-import { Editor, Toolbar, schema } from 'ngx-editor';
-import { keymap } from 'prosemirror-keymap';
-import { history } from 'prosemirror-history';
-import { EditorState } from 'prosemirror-state'
-import { EditorView } from 'prosemirror-view'
-import { Awareness } from 'y-protocols/awareness';
+import { Editor, Toolbar } from 'ngx-editor';
 
 @Component({
   selector: 'app-editor',
@@ -60,7 +52,6 @@ export class EditorComponent implements OnInit, OnDestroy {
     });
   }
 
-
   ngOnDestroy(): void {
     // Destroy the editor and provider to clean up resources
     this.editor.destroy();
@@ -68,7 +59,4 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.ydoc.destroy();
   }
 
-
 }
-
-
