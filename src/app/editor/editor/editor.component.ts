@@ -18,6 +18,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   ydoc: Y.Doc = new Y.Doc();
   provider!: WebsocketProvider;
   yText!: Y.XmlFragment;
+  docValue: any;
 
   ngOnInit(): void {
     this.yText = this.ydoc.getXmlFragment('prosemirror');
@@ -51,6 +52,9 @@ export class EditorComponent implements OnInit, OnDestroy {
         yUndoPlugin(),
       ]
     });
+
+
+    this.monitorUpdates();
   }
 
   ngOnDestroy(): void {
@@ -58,6 +62,24 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.editor.destroy();
     this.provider.destroy();
     this.ydoc.destroy();
+  }
+
+  monitorUpdates(): void {
+    // this.editor.valueChanges.subscribe(data => {
+    //   console.log(data['content']);
+    // })
+
+    this.editor.update.subscribe(data => {
+      this.docValue = data.state.doc.toJSON();
+      const contentToSave = JSON.stringify(this.docValue);
+      this.saveDocument(contentToSave);
+    })
+    // const content = this.editor.state.doc.content.toJSON();
+    // return JSON.stringify(content, null, 2);
+  }
+
+  saveDocument(content: string): void {
+    console.log(content);
   }
 
 }
