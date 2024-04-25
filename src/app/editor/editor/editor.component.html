@@ -2,14 +2,14 @@
 <div class="content">
     <form [formGroup]="form">
         <div class="editor">
-            <ngx-editor-menu [editor]="editor" [customMenuRef]="customMenu">
+            <ngx-editor-menu [editor]="editor" [customMenuRef]="codeMirror">
             </ngx-editor-menu>
             <ngx-editor [editor]="editor" formControlName="editorContent">
             </ngx-editor>
         </div>
     </form>
 
-    <ng-template #customMenu>
-        <app-custom-menu [editor]="editor"></app-custom-menu>
+    <ng-template #codeMirror>
+        <app-code-mirror [editor]="editor"></app-code-mirror>
     </ng-template>
 </div>

@@ -6,13 +6,13 @@ import { AppComponent } from './app.component';
 import { EditorComponent } from './editor/editor/editor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxEditorModule } from 'ngx-editor';
-import { CustomMenuComponent } from './editor/custom-menu/custom-menu.component';
+import { CodeMirrorComponent } from './editor/code-mirror';
 
 @NgModule({
   declarations: [
     AppComponent,
     EditorComponent,
-    CustomMenuComponent,
+    CodeMirrorComponent
   ],
   imports: [
     BrowserModule,

@@ -7,7 +7,7 @@ import { Editor } from 'ngx-editor';
 import { isNodeActive } from 'ngx-editor/helpers';
 
 @Component({
-  selector: 'app-custom-menu',
+  selector: 'app-code-mirror',
   template: `
   <div class="NgxEditor__Seperator"></div>
   <div class="NgxEditor__MenuItem NgxEditor__MenuItem--Text" (mousedown)="onClick($event)"
@@ -17,7 +17,7 @@ import { isNodeActive } from 'ngx-editor/helpers';
   `,
   styles: [':host {display: flex}'],
 })
-export class CustomMenuComponent implements OnInit {
+export class CodeMirrorComponent implements OnInit {
   constructor() {}
 
   @Input() editor!: Editor;
