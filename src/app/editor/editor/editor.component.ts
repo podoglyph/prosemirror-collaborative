@@ -6,7 +6,9 @@ import {
   yUndoPlugin,
   yCursorPlugin,
 } from 'y-prosemirror';
-import { Editor, Toolbar } from 'ngx-editor';
+import { Editor, Toolbar, toHTML } from 'ngx-editor';
+import { Subject, takeUntil } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-editor',
@@ -19,13 +21,15 @@ export class EditorComponent implements OnInit, OnDestroy {
   provider!: WebsocketProvider;
   yText!: Y.XmlFragment;
   docValue: any;
-
+  unsubscribe$: Subject<void> = new Subject<void>();
+  wordCount: number = 0;
+  
   ngOnInit(): void {
     this.yText = this.ydoc.getXmlFragment('prosemirror');
 
     // Initialize the provider
     this.provider = new WebsocketProvider(
-      'ws://localhost:1234/',
+      environment.webSocketUri,
       'ws',
       this.ydoc,
       { connect: true }
@@ -53,7 +57,6 @@ export class EditorComponent implements OnInit, OnDestroy {
       ]
     });
 
-
     this.monitorUpdates();
   }
 
@@ -62,24 +65,43 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.editor.destroy();
     this.provider.destroy();
     this.ydoc.destroy();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   monitorUpdates(): void {
-    // this.editor.valueChanges.subscribe(data => {
-    //   console.log(data['content']);
-    // })
-
-    this.editor.update.subscribe(data => {
+    this.editor.update.pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
       this.docValue = data.state.doc.toJSON();
+      this.countWords(data.state.doc);
       const contentToSave = JSON.stringify(this.docValue);
       this.saveDocument(contentToSave);
-    })
-    // const content = this.editor.state.doc.content.toJSON();
-    // return JSON.stringify(content, null, 2);
+    });
+  }
+  
+  saveDocument(content: string): void {
+    // this content is what gets saved in the database
+    // {"type":"doc","content":[{"type":"paragraph","attrs":{"align":null}}]}
+    console.log(content);
+  }
+  
+  docToHtml(): void {
+    const html = toHTML(this.docValue);
+    console.log(html);
   }
 
-  saveDocument(content: string): void {
-    console.log(content);
+  countWords(doc: any): void {
+    let count = 0;
+    doc.descendants((node: any) => {
+      if (node.isText) {
+        let text = node.text;
+        if (text) {
+          // Split text on spaces, tabs, new lines, etc., and filter out empty strings
+          count += text.split(/\s+/).filter((word: string) => word.length > 0).length;
+        }
+      }
+    });
+
+    this.wordCount = count;
   }
 
 }
