@@ -10,6 +10,9 @@ import { Editor, Toolbar, toHTML } from 'ngx-editor';
 import { Subject, takeUntil } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+import { FormGroup, FormControl } from '@angular/forms';
+import schema from '../schema';
+
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
@@ -23,7 +26,11 @@ export class EditorComponent implements OnInit, OnDestroy {
   docValue: any;
   unsubscribe$: Subject<void> = new Subject<void>();
   wordCount: number = 0;
-  
+
+  form = new FormGroup({
+    editorContent: new FormControl(""),
+  });
+
   ngOnInit(): void {
     this.yText = this.ydoc.getXmlFragment('prosemirror');
 
@@ -50,12 +57,15 @@ export class EditorComponent implements OnInit, OnDestroy {
       history: true,
       keyboardShortcuts: true,
       inputRules: true,
+      schema: schema,
       plugins: [
         ySyncPlugin(this.yText),
         yCursorPlugin(this.provider.awareness),
         yUndoPlugin(),
       ]
     });
+
+
 
     this.monitorUpdates();
   }
@@ -73,17 +83,17 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.editor.update.pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
       this.docValue = data.state.doc.toJSON();
       this.countWords(data.state.doc);
-      const contentToSave = JSON.stringify(this.docValue);
-      this.saveDocument(contentToSave);
+      // const contentToSave = JSON.stringify(this.docValue);
+      // this.saveDocument(contentToSave);
     });
   }
-  
+
   saveDocument(content: string): void {
     // this content is what gets saved in the database
     // {"type":"doc","content":[{"type":"paragraph","attrs":{"align":null}}]}
     console.log(content);
   }
-  
+
   docToHtml(): void {
     const html = toHTML(this.docValue);
     console.log(html);
