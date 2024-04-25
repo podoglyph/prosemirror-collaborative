@@ -8,7 +8,7 @@ import {
 } from 'y-prosemirror';
 import { Editor, Toolbar, toHTML } from 'ngx-editor';
 import { Subject, takeUntil } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-editor',
