@@ -6,13 +6,17 @@ import { AppComponent } from './app.component';
 import { EditorComponent } from './editor/editor/editor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxEditorModule } from 'ngx-editor';
-import { CodeMirrorComponent } from './editor/code-mirror';
+import { CodeMirrorComponent } from './editor/code-mirror.component';
+import { FootnoteComponent } from './editor/footnote.component';
+import { PopupComponent } from './editor/popup/popup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EditorComponent,
-    CodeMirrorComponent
+    CodeMirrorComponent,
+    FootnoteComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,

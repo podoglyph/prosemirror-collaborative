@@ -1,15 +1,17 @@
 <p>Word count: {{wordCount}}</p>
-<div class="content">
+<div class="content" id="editor-container">
     <form [formGroup]="form">
         <div class="editor">
             <ngx-editor-menu [editor]="editor" [customMenuRef]="codeMirror">
             </ngx-editor-menu>
             <ngx-editor [editor]="editor" formControlName="editorContent">
             </ngx-editor>
+            <app-popup *ngIf="showPopup" [ngStyle]="position" [searchTerm]="selectionText"></app-popup>
         </div>
     </form>
 
     <ng-template #codeMirror>
         <app-code-mirror [editor]="editor"></app-code-mirror>
+        <app-footnote [editor]="editor" />
     </ng-template>
 </div>

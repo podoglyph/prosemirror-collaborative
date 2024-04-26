@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+#editor-container {
+    counter-reset: prosemirror-footnote;
+    
+    footnote {
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    
+    footnote::after {
+        content: counter(prosemirror-footnote);
+        vertical-align: super;
+        font-size: 75%;
+        counter-increment: prosemirror-footnote;
+    }
+}

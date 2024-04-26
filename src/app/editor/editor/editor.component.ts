@@ -9,9 +9,10 @@ import {
 import { Editor, Toolbar, toHTML } from 'ngx-editor';
 import { Subject, takeUntil } from 'rxjs';
 import { environment } from '../../../environments/environment';
-
 import { FormGroup, FormControl } from '@angular/forms';
 import schema from '../schema';
+import { Plugin, PluginKey } from "prosemirror-state";
+
 
 @Component({
   selector: 'app-editor',
@@ -27,9 +28,48 @@ export class EditorComponent implements OnInit, OnDestroy {
   unsubscribe$: Subject<void> = new Subject<void>();
   wordCount: number = 0;
 
+  showPopup: boolean = false;
+  position: { [Key: string]: string } = {};
+  selectionText: string = "";
+
   form = new FormGroup({
     editorContent: new FormControl(""),
   });
+
+  googleSearchPlugin = new Plugin({
+    key: new PluginKey("selection-google"),
+    view: () => ({
+      update: (view) => {
+        // Details about the API and usage of the EditorView object are available in the
+        // ProseMirror documentation - https://prosemirror.net/docs/ref/#view
+        const state = view.state;
+        const selectionCollapsed = state.selection.empty;
+
+        if (!selectionCollapsed) {
+          const { from, to } = state.selection;
+          const start = view.coordsAtPos(from),
+            end = view.coordsAtPos(to);
+          const left = Math.max((start.left + end.left) / 2, start.left);
+          // The Editor is initialized outside of the Angular Zone for better performance.
+          // Run any plugin code that needs to trigger the Angular Change Detection in the zone.
+          // this.ngZone.run(() => {
+            this.showPopup = true;
+            this.position = {
+              top: start.top + "px",
+              left: left + "px",
+            };
+            this.selectionText = "selection ehre"
+          // });
+        } else {
+          this.showPopup = false;
+          // this.ngZone.run(() => {
+          // });
+        }
+      },
+    }),
+  });
+
+
 
   ngOnInit(): void {
     this.yText = this.ydoc.getXmlFragment('prosemirror');
@@ -62,10 +102,9 @@ export class EditorComponent implements OnInit, OnDestroy {
         ySyncPlugin(this.yText),
         yCursorPlugin(this.provider.awareness),
         yUndoPlugin(),
+        // this.googleSearchPlugin,
       ]
     });
-
-
 
     this.monitorUpdates();
   }
