@@ -2,10 +2,8 @@
 <div class="content" id="editor-container">
     <form [formGroup]="form">
         <div class="editor">
-            <ngx-editor-menu [editor]="editor" [customMenuRef]="codeMirror">
-            </ngx-editor-menu>
-            <ngx-editor [editor]="editor" formControlName="editorContent">
-            </ngx-editor>
+            <ngx-editor-menu [editor]="editor" [customMenuRef]="codeMirror" [toolbar]="toolbar"></ngx-editor-menu>
+            <ngx-editor [editor]="editor" formControlName="editorContent"></ngx-editor>
             <app-popup *ngIf="showPopup" [ngStyle]="position" [searchTerm]="selectionText"></app-popup>
         </div>
     </form>
