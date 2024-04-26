@@ -6,13 +6,13 @@ import {
   yUndoPlugin,
   yCursorPlugin,
 } from 'y-prosemirror';
-import { Editor, Toolbar, toHTML } from 'ngx-editor';
+import { Editor, toHTML } from 'ngx-editor';
 import { Subject, takeUntil } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { FormGroup, FormControl } from '@angular/forms';
 import schema from '../schema';
 import { Plugin, PluginKey } from "prosemirror-state";
-
+import { toolbar } from '../toolbar';
 
 @Component({
   selector: 'app-editor',
@@ -36,16 +36,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     editorContent: new FormControl(""),
   });
 
-  toolbar: Toolbar = [
-    ['bold', 'italic'],
-    ['underline', 'strike'],
-    ['code', 'blockquote'],
-    ['ordered_list', 'bullet_list'],
-    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-    ['link', 'image'],
-    ['text_color', 'background_color'],
-    ['align_left', 'align_center', 'align_right', 'align_justify'],
-  ];
+  toolbar = toolbar;
 
   googleSearchPlugin = new Plugin({
     key: new PluginKey("selection-google"),
@@ -80,8 +71,6 @@ export class EditorComponent implements OnInit, OnDestroy {
     }),
   });
 
-
-
   ngOnInit(): void {
     this.yText = this.ydoc.getXmlFragment('prosemirror');
 
@@ -97,12 +86,6 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   initEditor(): void {
-    const toolbar: Toolbar = [
-      ['bold', 'italic', 'underline', 'code'],
-      ['ordered_list', 'bullet_list'],
-      ['link', 'image', 'blockquote'],
-    ];
-
     this.editor = new Editor({
       content: '<p>Hello World from ngx-editor with Yjs!</p>',
       history: true,
