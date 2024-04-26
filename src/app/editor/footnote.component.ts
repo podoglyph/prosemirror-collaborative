@@ -14,11 +14,13 @@ export class FootnoteComponent {
 
   constructor() { }
 
+  // @TODO: this needs to open a modal or something and allow the person to create a new reference or place an existing one
   addFootnote(): void {
     const id = `footnote-${Date.now()}`;
     const footnoteNode = this.editor.schema.nodes['footnote'].create({ id: id });
     const transaction = this.editor.view.state.tr.insert(this.editor.view.state.selection.anchor, footnoteNode);
     this.editor.view.dispatch(transaction);
+    window.alert("Add a new reference")
   }
   
 }
