@@ -4,7 +4,8 @@ import { Editor } from 'ngx-editor';
 @Component({
   selector: 'app-footnote',
   template: `
-    <button (click)="addFootnote()">Add Footnote</button>
+    <div class="NgxEditor__Seperator"></div>
+    <span class="NgxEditor__MenuItem NgxEditor__MenuItem--Text" (click)="addFootnote()">Add Footnote</span>
   `,
   styles: [':host {display: flex}'],
 })
